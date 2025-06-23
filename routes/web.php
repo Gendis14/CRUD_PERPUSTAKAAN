@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BukuController;
 
@@ -7,35 +8,52 @@ use App\Http\Controllers\BukuController;
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-| Di sini kamu bisa mendaftarkan semua route web untuk aplikasi Laravel.
-| File ini akan diload secara otomatis oleh RouteServiceProvider.
-|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
 */
 
-// Halaman utama bisa diarahkan langsung ke daftar buku
 Route::get('/', function () {
-    return redirect()->route('buku.index');
+    return view('welcome');
 });
 
-// ==================
-// ROUTE CRUD BUKU
-// ==================
 
-// Menampilkan daftar buku
-Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-// Form tambah buku
-Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
+// Semua route ini hanya bisa diakses jika user sudah login
+Route::middleware(['auth'])->group(function () {
 
-// Simpan buku baru
-Route::post('/buku', [BukuController::class, 'store'])->name('buku.store');
+    // ==================
+    // ROUTE CRUD BUKU
+    // ==================
 
-// Form edit buku
-Route::get('/buku/{id}/edit', [BukuController::class, 'edit'])->name('buku.edit');
+    // Menampilkan daftar buku
+    Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');
 
-// Update data buku
-Route::put('/buku/{id}', [BukuController::class, 'update'])->name('buku.update');
+    // Form tambah buku
+    Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
 
-// Hapus data buku
-Route::delete('/buku/{id}', [BukuController::class, 'destroy'])->name('buku.destroy');
+    // Simpan buku baru
+    Route::post('/buku', [BukuController::class, 'store'])->name('buku.store');
 
+    // Form edit buku
+    Route::get('/buku/{id}/edit', [BukuController::class, 'edit'])->name('buku.edit');
+
+    // Update data buku
+    Route::put('/buku/{id}', [BukuController::class, 'update'])->name('buku.update');
+
+    // Hapus data buku
+    Route::delete('/buku/{id}', [BukuController::class, 'destroy'])->name('buku.destroy');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
