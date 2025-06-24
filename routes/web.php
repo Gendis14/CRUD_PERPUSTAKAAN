@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BukuController;
+use App\Models\Buku;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,10 @@ use App\Http\Controllers\BukuController;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/api/buku', function () {
+    return response()->json(Buku::all());
 });
 
 
