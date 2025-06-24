@@ -19,29 +19,44 @@
                 </div>
             @endif
 
-            <form action="{{ route('buku.update', $buku->id) }}" method="POST">
+            <form action="{{ route('buku.update', $buku->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {{-- Judul --}}
                     <div>
                         <label for="judul" class="block font-medium text-sm text-gray-700 dark:text-white">Judul Buku</label>
                         <input type="text" id="judul" name="judul" value="{{ old('judul', $buku->judul) }}" class="mt-1 block w-full rounded-full shadow-sm border-gray-300 focus:border-purple-500 focus:ring focus:ring-purple-200 dark:bg-gray-700 dark:text-white">
                     </div>
 
+                    {{-- Penulis --}}
                     <div>
                         <label for="penulis" class="block font-medium text-sm text-gray-700 dark:text-white">Penulis</label>
                         <input type="text" id="penulis" name="penulis" value="{{ old('penulis', $buku->penulis) }}" class="mt-1 block w-full rounded-full shadow-sm border-gray-300 focus:border-purple-500 focus:ring focus:ring-purple-200 dark:bg-gray-700 dark:text-white">
                     </div>
 
+                    {{-- Penerbit --}}
                     <div>
                         <label for="penerbit" class="block font-medium text-sm text-gray-700 dark:text-white">Penerbit</label>
                         <input type="text" id="penerbit" name="penerbit" value="{{ old('penerbit', $buku->penerbit) }}" class="mt-1 block w-full rounded-full shadow-sm border-gray-300 focus:border-purple-500 focus:ring focus:ring-purple-200 dark:bg-gray-700 dark:text-white">
                     </div>
 
+                    {{-- Tahun --}}
                     <div>
                         <label for="tahun" class="block font-medium text-sm text-gray-700 dark:text-white">Tahun Terbit</label>
                         <input type="number" id="tahun" name="tahun" value="{{ old('tahun', $buku->tahun) }}" class="mt-1 block w-full rounded-full shadow-sm border-gray-300 focus:border-purple-500 focus:ring focus:ring-purple-200 dark:bg-gray-700 dark:text-white">
+                    </div>
+
+                    {{-- Gambar --}}
+                    <div class="md:col-span-2">
+                        <label for="gambar" class="block font-medium text-sm text-gray-700 dark:text-white">Ganti Sampul Buku (opsional)</label>
+                        <input type="file" id="gambar" name="gambar" accept="image/*" class="mt-1 block w-full rounded-full bg-gray-50 dark:bg-gray-700 dark:text-white border-gray-300 focus:border-purple-500 focus:ring focus:ring-purple-200">
+                        
+                        @if ($buku->gambar)
+                            <p class="mt-2 text-sm text-gray-500 dark:text-gray-300">Sampul saat ini:</p>
+                            <img src="{{ asset('storage/gambar_buku/' . $buku->gambar) }}" alt="Sampul Buku" class="mt-2 w-24 h-32 object-cover rounded shadow">
+                        @endif
                     </div>
                 </div>
 
