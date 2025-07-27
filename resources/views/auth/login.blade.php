@@ -5,7 +5,8 @@
     <!-- Header -->
     <div class="text-center mb-8">
 
-        <h1 class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent mb-2">
+        <h1
+            class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent mb-2">
             Library Portal
         </h1>
         <p class="text-gray-600 dark:text-gray-400 text-sm">
@@ -38,7 +39,8 @@
 
         <!-- Password -->
         <div class="space-y-2">
-            <x-input-label for="password" :value="__('Password')" class="text-gray-700 dark:text-gray-300 font-medium" />
+            <x-input-label for="password" :value="__('Password')"
+                class="text-gray-700 dark:text-gray-300 font-medium" />
             <div class="relative group">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg class="h-5 w-5 text-gray-400 group-focus-within:text-purple-500 transition-colors duration-200"
@@ -96,6 +98,16 @@
                     </a>
                 </div>
             @endif
+        </div>
+        <!-- Register Link -->
+        <div class="mt-6 text-center">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+                Don't have an account?
+                <a href="{{ route('register') }}"
+                    class="text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 font-semibold transition-colors duration-200">
+                    Register here
+                </a>
+            </p>
         </div>
     </form>
 
